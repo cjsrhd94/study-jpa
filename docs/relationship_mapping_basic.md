@@ -111,7 +111,7 @@ System.out.println("member.username = " + member.getUsername());
 
 - 주인은 `mappedBy` 속성을 사용하지 않으며, 주인이 아니면 `mappedBy` 속성으로 주인을 지정해야 한다.
 
-- **다대일(N:1), 일대다(1:N) 매핑의 경우 항상 `다` 쪽이 FK를 가진다.**
+- **다대일(N:1), 일대다(1:N) 매핑의 경우 항상 '다' 쪽이 FK를 가진다.**
     - 1쪽이 FK를 가지게 된다면, 1 엔티티를 수정했을 때, 다 테이블에 쿼리가 날아가게 되어 직관적이지 않다.
 
 ### 2.2 양방향 연관관계의 주의점
@@ -172,3 +172,7 @@ public void setTeam(Team team) {
 - 결론은 객체의 양방향 연관관계는 양쪽 모두 관계를 맺어주는 것이 좋다.
 - 따라서 위 코드와 같이 두 코드가 하나인 것처럼 사용하는 것이 안전하다.
 - 양방향 매핑시 무한 루프에 빠지지 않게 조심해야 한다. `toString()`을 주의하자.
+
+---
+### Reference
+- [자바 ORM 표준 JPA 프로그래밍](https://www.inflearn.com/course/ORM-JPA-Basic)
