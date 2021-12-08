@@ -1,5 +1,6 @@
 # 다양한 연관관계 매핑
 
+
 ## 1. 다대일(N:1)
 - 다대일의 반대 방향은 항상 일대다 관계고 일대다 관계의 반대 방향은 항상 다대일 관계다.
 - DB 테이블의 일, 다 관계에서 외래 키는 항상 '다' 쪽에 있다.
@@ -7,7 +8,8 @@
 
 ### 1.1 다대일 단방향
 ![manyToOne-one-way](./img/manyToOne-one-way.png)
-#### Memeber.java
+
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -23,6 +25,7 @@ public class Member {
     private Team team;
 }
 ```
+
 #### Team.java
 ```java
 @Entity
@@ -38,7 +41,8 @@ public class Team {
 
 ### 1.2 다대일 양방향
 ![manyToOne-two-way](./img/manyToOne-two-way.png)
-#### Memeber.java
+
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -63,6 +67,7 @@ public class Member {
     }
 }
 ```
+
 #### Team.java
 ```java
 @Entity
@@ -87,11 +92,13 @@ public class Team {
     }
 }
 ```
-- Meber의 `setTeam()`, Team의 `addMember()`과 같은 메서드는 항상 서로 참조하도록 만들어둔 편의 메서드이다.
+- Member의 `setTeam()`, Team의 `addMember()`과 같은 메서드는 항상 서로 참조하도록 만들어둔 편의 메서드이다.
 - 양쪽 다 편의 메소드를 작성할 시 무한루프에 빠질 수 있기 때문에, 이를 방지하는 코드가 필요하다.
+
 
 ## 2. 일대다(1:N)
 - 일대다 관계는 엔티티를 하나 이상 참조할 수 있으므로, 자바 컬렉션인 Collection, List, Set, Map 중에 하나를 사용해야 한다.
+
 ### 2.1 일대다 단방향
 ![oneToMany-one-way](./img/oneToMany-one-way.png)
 
@@ -143,6 +150,7 @@ tx.commit();
 - 일대다 단방향 매핑의 단점은 매핑한 객체가 관리하는 외래 키가 다른 테이블에 있다는 점이다.
 - 다른 테이블에 외래 키가 있기 때문에, 위와 같이 연관관계 처리를 위한 UPDATE 쿼리가 추가로 실행된다.
 - 따라서 일대다 단방향 매핑 대신 **다대일 양방향 매핑 사용이 권장된다.**
+
 ### 2.2 일대다 양방향
 ![oneToMany-two-way](./img/oneToMany-two-way.png)
 
@@ -164,7 +172,7 @@ public class Team {
 }
 ```
 
-#### Memeber.java
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -187,13 +195,15 @@ public class Member {
 - 따라서 위 코드처럼 일대다 단방향 매핑 반대편에 다대일 단방향 매핑을 읽기 전용으로 추가해서 일대다 양방향처럼 보기도록 할 수 있다.
 - 그러나 일대다 단방향 매핑이 가지는 단점을 그대로 가지기 때문에, 가능하면 다대일 양방향 매핑을 사용하자.
 
+
 ## 3. 일대일(1:1)
 - 일대일 관계는 그 반대도 일대일 관계다.
 - 따라서 **일대일 관계는 주 테이블이나 대상 테이블 둘 줄 어느 곳이나 외래 키를 가질 수 있다.**
 
 ### 3.1 주테이블에 외래키 단방향
 ![oneToOne-main-one-way](./img/oneToOne-main-one-way.png)
-#### Memeber.java
+
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -228,7 +238,7 @@ public class Locker {
 ### 3.2 주테이블에 외래키 양방향
 ![oneToOne-main-two-way](./img/oneToOne-main-two-way.png)
 
-#### Memeber.java
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -265,11 +275,10 @@ public class Locker {
 ![oneToOne-sub-one-way](./img/oneToOne-sub-one-way.png)
 - 대상 테이블에 외래 키가 있는 단방향 관계는 JPA에서 지원하지 않으며, 이런 모양으로 매핑할 수 있는 방법도 없다.
 
-
 ### 3.4 대상 테이블에 외래키 양방향
 ![oneToOne-sub-two-way](./img/oneToOne-sub-two-way.png)
 
-#### Memeber.java
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -312,6 +321,7 @@ public class Locker {
   - 장점: 주 테이블과 대상 테이블을 일대일에서 일대다 관계로 변경할 때 테이블 구조를 유지할 수 있다.
   - 단점: 프록시 기능의 한계로 지연 로딩으로 설정해도 항상 즉시 로딩된다.  
     
+
 ## 4. 다대다(N:N)
 ![manyToMany-junction-table](./img/manyToMany-junction-table.png)
 - 관계형 DB는 정규화된 테이블 2개로 다대다 관계를 표현할 수 없다.
@@ -343,6 +353,7 @@ public class Order {
     private int orderAmount;
 }
 ```
+
 #### Member.java
 ```java
 @Entity
