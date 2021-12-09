@@ -51,7 +51,7 @@ public class Period {
 #### Address
 ```java
 @Embeddable
-public class Period {
+public class Address {
 
     private String city;
     private String street;
@@ -70,6 +70,7 @@ public class Period {
 - 임베디드 타입이 null 이면 매핑한 컬럼 값은 모두 null이 된다.    
 
 ### 3.1 속성 재정의
+#### Member.java
 ```java
 @Entity
 public class Member {
@@ -84,8 +85,8 @@ public class Member {
 
     @Embedded
     @AttributeOverrides({@AttributeOverride(name = "city", column = @Column(name = "COMPANY_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "COMPANY_STREET")),
-            @AttributeOverride(name = "zipcode", column = @Column(name = "COMPANY_ZIPCODE"))
+                         @AttributeOverride(name = "street", column = @Column(name = "COMPANY_STREET")),
+                         @AttributeOverride(name = "zipcode", column = @Column(name = "COMPANY_ZIPCODE"))})
     })
     private Address anotherAddress;
 }
@@ -105,7 +106,7 @@ member2.setHomeAddress(address);
 ```
 
 - 임베디드 타입같은 값 타입을 여러 엔티티에서 공유하면 위험하다.
-- 위 코드의 의도는 member2의 주소만 NewCity로 변경되길 기대했지만, member1의 주소도 NewCity로 변경되어 버린다.
+- 위 코드의 의도는 member2의 주소만 'NewCity'로 변경되길 기대했지만, member1의 주소도 'NewCity'로 변경되어 버린다.
     - member1과 member2가 같은 address 인스턴스를 참조하기 때문이다.
     - 영속성 컨텍스트는 member1과 member2 둘다 city 속성이 변경된 것으로 판단해서 각각 UPDATE 쿼리를 내보낸다.
 
@@ -168,9 +169,9 @@ public class Member {
 ```
 - 값 타입을 하나 이상 저장하려면 컬렉션에 보관하고 @ElementCollection, @CollectionTable 어노테이션을 사용하면 된다.
 - DB는 컬렉션을 컬럼에 저장할 수 없기 때문에별도의 테이블이 필요하다.
-- 값 타입 컬렉션은 영속성 전이(Cascade) + 고아 객체 제거 기능을 필수로 가진다.
+- 값 타입 컬렉션은 영속성 전이(Cascade) + 고아 객체 제거(ORPHAN REMOVE) 기능을 필수로 가진다.
     - 생명 주기가 엔티티에 의존한다.
-    - 별도로 값 컬렉션을 persist()하지 않아도 상위 엔티티를 영속화할 때 함께 영속화된다.
+    - 별도로 값 컬렉션을 `persist()`하지 않아도 상위 엔티티를 영속화할 때 함께 영속화된다.
     - 값 컬렉션에 변화가 생겨도 자동으로 수정된다.
 - 값 타입 컬렉션도 기본적으로 지연 로딩 전략을 사용한다.
 
@@ -207,3 +208,7 @@ public class AddressEntity {
 
 - 실무에서는 값 타입 컬렉션이 매핑된 테이블에 데이터가 많다면 일대다 관계를 고려한다.
 - 위와 같이 일대다 관계 + 영속성 전이(Cascade) + 고아 객체 제거(ORPHAN REMOVE) 기능을 적용하면 값 타입 컬렉션처럼 사용할 수 있다.
+
+---
+### Reference
+- [자바 ORM 표준 JPA 프로그래밍](https://www.inflearn.com/course/ORM-JPA-Basic)
