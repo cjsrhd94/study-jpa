@@ -307,7 +307,7 @@ parent1.getChildList().remove(0);
   - @OneToOne, @OneToMany와 같이 참조하는 곳이 하나일 때만 사용해야 한다.
 - CascadeType.REMOVE를 설정한 것과 같다.
 
-### 생명 주기
+### 4.2 생명 주기
 - CascadeType.ALL + orphanRemoval = true를 동시에 사용하면 어떻게 될까?
 - 두 옵션을 모두 활성화 하면 부모 엔티티를 통해서 자식의 생명주기를 관리할 수 있다.
 - 즉 자식을 저장하려면 부모에 등록하면되고, 자식을 삭제하려면 부모에서 제거하면 된다.
